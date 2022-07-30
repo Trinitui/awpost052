@@ -21,7 +21,7 @@ var (
 // Userdata is for holding full user data
 // Userdata table + Username
 type MSDSCourse struct {
-	CID     string `json:"courseI_D`
+	CID     string `json:"courseID`
 	CNAME   string `json:"course_name"`
 	CPREREQ string `json:"prerequisite"`
 }
@@ -51,7 +51,7 @@ func Cexists(coursename string) int {
 	}
 	defer db.Close()
 
-	CID := -1
+	CID := string(-1)
 	statement := fmt.Sprintf(`SELECT "cid" FROM "msdscoursecatalog" where cname = '%s'`, coursename)
 	rows, err := db.Query(statement)
 
@@ -111,7 +111,7 @@ func AddCourse(d MSDSCourse) int {
 }
 
 // DeleteCourse deletes an existing user
-func DeleteCourse(id int) error {
+func DeleteCourse(id1 string) error {
 	db, err := CopenConnection()
 	if err != nil {
 		return err
@@ -119,7 +119,7 @@ func DeleteCourse(id int) error {
 	defer db.Close()
 
 	// Does the ID exist?
-	statement := fmt.Sprintf(`SELECT "cid" FROM "msdscoursecatalog" where cid = %d`, id)
+	statement := fmt.Sprintf(`SELECT "cid" FROM "msdscoursecatalog" where cid = %d`, id1)
 	rows, err := db.Query(statement)
 
 	var coursename string
