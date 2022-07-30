@@ -122,7 +122,7 @@ func AddCourse(d MSDSCourse) int {
 }
 
 // DeleteCourse deletes an existing user
-func DeleteCourse(id1 string) error {
+func DeleteCourse(id1 int) error {
 	db, err := CopenConnection()
 	if err != nil {
 		return err
@@ -142,13 +142,13 @@ func DeleteCourse(id1 string) error {
 	}
 	defer rows.Close()
 
-	if Cexists(coursename) != id {
-		return fmt.Errorf("Course with ID %d does not exist", id)
+	if Cexists(coursename) != id1 {
+		return fmt.Errorf("Course with ID %d does not exist", id1)
 	}
 
 	// Delete from msdscoursecatalog
 	deleteStatement := `delete from "msdscoursecatalog" where cid=$1`
-	_, err = db.Exec(deleteStatement, id)
+	_, err = db.Exec(deleteStatement, id1)
 	if err != nil {
 		return err
 	}
