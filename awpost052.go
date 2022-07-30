@@ -73,6 +73,12 @@ func Cexists(coursename string) int {
 // -1 if there was an error
 func AddCourse(d MSDSCourse) int {
 	d.CNAME = strings.ToLower(d.CNAME)
+	fmt.Println("========")
+	fmt.Println("Starting Insert")
+	fmt.Println(d.CID)
+	fmt.Println(d.CNAME)
+	fmt.Println(d.CPREREQ)
+	fmt.Println("========")
 
 	db, err := CopenConnection()
 	if err != nil {
