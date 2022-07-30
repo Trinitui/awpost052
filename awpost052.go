@@ -99,6 +99,10 @@ func AddCourse(d MSDSCourse) int {
 				return courID
 			}
 	*/
+	fmt.Println("Starting Insert")
+	fmt.Println(d.CID)
+	fmt.Println(d.CNAME)
+	fmt.Println(d.CPREREQ)
 	insertStatement := `insert into "msdscoursecatalog" ("cid", "cname", "cprereq")
 	values ($1, $2, $3)`
 	_, err = db.Exec(insertStatement, d.CID, d.CNAME, d.CPREREQ)
