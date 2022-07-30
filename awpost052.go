@@ -51,7 +51,7 @@ func Cexists(coursename string) int {
 	}
 	defer db.Close()
 
-	CID := -1
+	CID := 0
 	statement := fmt.Sprintf(`SELECT "cid" FROM "msdscoursecatalog" where cname = '%s'`, coursename)
 	rows, err := db.Query(statement)
 
@@ -80,24 +80,24 @@ func AddCourse(d MSDSCourse) int {
 		return -1
 	}
 	defer db.Close()
-
-	courID := Cexists(d.CNAME)
-	if courID != -1 {
-		fmt.Println("Course Name already exists:", d.CNAME)
-		return -1
-	}
 	/*
-		insertStatement := `insert into "msdscoursecatalog" ("cname") values ($1)`
-		_, err = db.Exec(insertStatement, d.CNAME)
-		if err != nil {
-			fmt.Println(err)
+		courID := Cexists(d.CNAME)
+		if courID != -1 {
+			fmt.Println("Course Name already exists:", d.CNAME)
 			return -1
 		}
 
-		courID = Cexists(d.CNAME)
-		if courID == -1 {
-			return courID
-		}
+			insertStatement := `insert into "msdscoursecatalog" ("cname") values ($1)`
+			_, err = db.Exec(insertStatement, d.CNAME)
+			if err != nil {
+				fmt.Println(err)
+				return -1
+			}
+
+			courID = Cexists(d.CNAME)
+			if courID == -1 {
+				return courID
+			}
 	*/
 	insertStatement := `insert into "msdscoursecatalog" ("cid", "cname", "cprereq")
 	values ($1, $2, $3)`
@@ -106,7 +106,7 @@ func AddCourse(d MSDSCourse) int {
 		fmt.Println("db.Exec()", err)
 		return -1
 	}
-
+	courID := 0
 	return courID
 }
 
