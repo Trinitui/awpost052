@@ -36,6 +36,7 @@ func CopenConnection() (*sql.DB, error) {
 	if err != nil {
 		return nil, err
 	}
+	fmt.Println("Opened db nicely!")
 	return db, nil
 }
 
